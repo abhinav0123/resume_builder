@@ -124,53 +124,55 @@ class _SimSelectionScreenState extends State<SimSelectionScreen> {
                           ),
                           const SizedBox(height: 24),
                           Expanded(
-                            child: ListView.builder(
-                              itemCount: simCards.length,
-                              itemBuilder: (context, index) {
-                                final sim = simCards[index];
+                            child: RadioGroup<int>(
+                              groupValue: selectedSubscriptionId,
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedSubscriptionId = value;
+                                });
+                              },
+                              child: ListView.builder(
+                                itemCount: simCards.length,
+                                itemBuilder: (context, index) {
+                                  final sim = simCards[index];
 
-                                final isSelected = selectedSubscriptionId ==
-                                    sim.subscriptionId;
+                                  final isSelected = selectedSubscriptionId ==
+                                      sim.subscriptionId;
 
-                                return Card(
-                                  margin: const EdgeInsets.only(
-                                    bottom: 12,
-                                  ),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    side: BorderSide(
-                                      color: isSelected
-                                          ? Colors.blue
-                                          : Colors.grey.shade300,
-                                      width: isSelected ? 2 : 1,
+                                  return Card(
+                                    margin: const EdgeInsets.only(
+                                      bottom: 12,
                                     ),
-                                  ),
-                                  child: RadioListTile<int>(
-                                    value: sim.subscriptionId,
-                                    groupValue: selectedSubscriptionId,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        selectedSubscriptionId = value;
-                                      });
-                                    },
-                                    title: Text(
-                                      sim.carrierName.isNotEmpty
-                                          ? sim.carrierName
-                                          : sim.displayName,
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                      side: BorderSide(
+                                        color: isSelected
+                                            ? Colors.blue
+                                            : Colors.grey.shade300,
+                                        width: isSelected ? 2 : 1,
                                       ),
                                     ),
-                                    subtitle: Text(
-                                      'SIM ${sim.slotIndex + 1}',
+                                    child: RadioListTile<int>(
+                                      value: sim.subscriptionId,
+                                      title: Text(
+                                        sim.carrierName.isNotEmpty
+                                            ? sim.carrierName
+                                            : sim.displayName,
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      subtitle: Text(
+                                        'SIM ${sim.slotIndex + 1}',
+                                      ),
+                                      secondary: const Icon(
+                                        Icons.sim_card,
+                                        size: 32,
+                                      ),
                                     ),
-                                    secondary: const Icon(
-                                      Icons.sim_card,
-                                      size: 32,
-                                    ),
-                                  ),
-                                );
-                              },
+                                  );
+                                },
+                              ),
                             ),
                           ),
                           SizedBox(

@@ -31,13 +31,10 @@ class ApiService {
         data: formData,
         options: Options(contentType: 'multipart/form-data'),
       );
-      print('Response: Statuscode: ${response.statusCode}');
       return ResumeResult.fromJson(
         Map<String, dynamic>.from(response.data),
       );
     } on DioException catch (error) {
-      print('StatusCode: ${error.response?.statusCode}');
-
       final detail = error.response?.data is Map
           ? error.response?.data['detail']?.toString()
           : null;
